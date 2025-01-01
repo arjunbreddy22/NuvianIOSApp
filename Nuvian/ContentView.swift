@@ -8,9 +8,18 @@
 import SwiftUI
 
 struct ContentView: View {
+    @EnvironmentObject var streak: Streak
     var body: some View {
         VStack {
-            Text("Update")
+            HStack {
+                Text("Current Streak:")
+                Spacer()
+                Text("\(streak.streakCount) days")
+                
+                Button("Increment Streak") {
+                    streak.streakCount += 1
+                }
+            }
         }
         .padding()
     }
@@ -18,4 +27,5 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
+        .environmentObject(Streak())
 }

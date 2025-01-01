@@ -9,9 +9,11 @@ import SwiftUI
 
 @main
 struct NuvianApp: App {
+    @StateObject private var streak = Streak()
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(streak)
         }
     }
 }
