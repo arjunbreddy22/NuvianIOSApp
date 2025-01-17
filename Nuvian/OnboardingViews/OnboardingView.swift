@@ -6,36 +6,78 @@
 //
 
 import SwiftUI
+import FamilyControls
 
 struct OnboardingView: View {
     @AppStorage("hasSeenOnboarding") private var hasSeenOnboarding: Bool = false
+    @State private var authorizationStatus: String = ""
+    @State private var isAuthorized: Bool = false
+    @State private var isPressed: Bool = false
     // remove this init later, it makes it so hasSeenOnboarding resets whenever I come back here
     init() {
         hasSeenOnboarding = false
     }
     var body: some View {
-        NavigationView {
+        NavigationStack {
             ZStack {
                 Color(red: 10/255, green: 25/255, blue: 85/255)
                     .ignoresSafeArea()
                 VStack {
-                    Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+                    Text("Welcome to Nuvian")
+                        .font(.largeTitle)
+                        .fontWeight(.bold)
                         .foregroundStyle(.white)
-                    Button("Get Started") {
-                        hasSeenOnboarding = true
+                    Text("Sleep better, be better")
+                        .foregroundStyle(.white)
+                        
+                    Button(action: {
+                        isPressed = true
+                        Task {
+                            await requestAuth()
+                            isAuthorized = true
+                        }
+                       
+                    }) {
+                        // Container view to make entire area clickable
+                        ZStack {
+                            // Background
+                            LinearGradient(
+                                gradient: Gradient(colors: [
+                                    Color(red: 0/255, green: 210/255, blue: 255/255),
+                                    Color(red: 58/255, green: 123/255, blue: 213/255)
+                                ]),
+                                startPoint: .leading,
+                                endPoint: .trailing
+                            )
+                            .cornerRadius(30)
+                            
+                            // Text
+                            Text("Get Started")
+                                .foregroundStyle(Color(red: 0/255, green:255/255, blue: 255/255))
+                                .fontWeight(.semibold)
+                                .foregroundColor(.white)
+                        }
                     }
-                    .foregroundStyle(Color(red: 0/255, green:255/255, blue: 255/255))
-                    if hasSeenOnboarding {
-                        Text("True")
-                            .foregroundStyle(.white)
-                    } else {
-                        Text("False")
-                            .foregroundStyle(.white)
-                    }
-                    //technically not neccessary because ContentView already switches the page based on val of hasSeenOnboarding. I will keep for testing purposes though.
-                    
+                    .frame(width: 220, height: 60)
+                    .scaleEffect(isPressed ? 0.95 : 1.0)
+                    .animation(.spring(response: 0.3, dampingFraction: 0.6), value: isPressed)
+
+                }
+                .navigationDestination(isPresented: $isAuthorized) {
+                    OnboardingView2()
                 }
             }
+        }
+    }
+   
+    private func requestAuth() async {
+        let center = AuthorizationCenter.shared
+        do {
+            try await center.requestAuthorization(for: FamilyControlsMember.individual)
+            authorizationStatus = "Authorized"
+            
+        } catch {
+            authorizationStatus = "Not Authorized"
         }
     }
 }
@@ -43,4 +85,5 @@ struct OnboardingView: View {
 #Preview {
     OnboardingView()
         .environmentObject(Streak())
+        
 }

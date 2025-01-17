@@ -6,14 +6,18 @@
 //
 
 import SwiftUI
-
+import ManagedSettings
 @main
 struct NuvianApp: App {
     @StateObject private var streak = Streak()
+    @StateObject var store = ManagedSettingsStore()
+   
     var body: some Scene {
         WindowGroup {
             ContentView()
                 .environmentObject(streak)
+                .environmentObject(store)
+                
         }
     }
 }

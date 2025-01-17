@@ -6,14 +6,26 @@
 //
 
 import SwiftUI
-
+import ManagedSettings
 struct ContentView: View {
     @AppStorage("hasSeenOnboarding") private var hasSeenOnboarding: Bool = false
+    
+    let store = ManagedSettingsStore()
+    init() {
+        hasSeenOnboarding = false
+    }
     var body: some View {
-        if hasSeenOnboarding {
-            Homepage()
-        } else {
-            OnboardingView()
+        VStack {
+            if hasSeenOnboarding {
+                Homepage()
+            } else {
+                OnboardingView()
+            }
+            
+            Button("Disable Blocking") {
+                store.shield.applications = nil
+                print("Blocking disabled")
+            }
         }
     }
 }
@@ -21,4 +33,5 @@ struct ContentView: View {
 #Preview {
     ContentView()
         .environmentObject(Streak())
+        
 }
