@@ -32,11 +32,6 @@ struct OnboardingView: View {
                         
                     Button(action: {
                         isPressed = true
-                        Task {
-                            await requestAuth()
-                            isAuthorized = true
-                        }
-                       
                     }) {
                         // Container view to make entire area clickable
                         ZStack {
@@ -61,25 +56,17 @@ struct OnboardingView: View {
                     .frame(width: 220, height: 60)
                     .scaleEffect(isPressed ? 0.95 : 1.0)
                     .animation(.spring(response: 0.3, dampingFraction: 0.6), value: isPressed)
+                    
 
                 }
-                .navigationDestination(isPresented: $isAuthorized) {
-                    OnboardingView2()
+                .navigationDestination(isPresented: $isPressed) {
+                    WhyNuvianView()
                 }
             }
         }
     }
    
-    private func requestAuth() async {
-        let center = AuthorizationCenter.shared
-        do {
-            try await center.requestAuthorization(for: FamilyControlsMember.individual)
-            authorizationStatus = "Authorized"
-            
-        } catch {
-            authorizationStatus = "Not Authorized"
-        }
-    }
+
 }
 
 #Preview {

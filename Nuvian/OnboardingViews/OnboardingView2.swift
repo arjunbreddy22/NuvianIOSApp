@@ -62,6 +62,7 @@ struct OnboardingView2: View {
             }
         }
         .navigationBarBackButtonHidden(true)
+     
     }
     func saveSelectionToUserDefaults() {
         let sharedDefaults = UserDefaults(suiteName: "group.com.arjun.nuvian")
