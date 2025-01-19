@@ -34,6 +34,7 @@ struct OnboardingView2: View {
             .padding()
             Button("Save Selection in User Defaults") {
                 saveSelectionToUserDefaults()
+               
             }
        
            
@@ -60,6 +61,13 @@ struct OnboardingView2: View {
             Button("Print user defaults") {
                 printStoredAppsBlockedJSON()
             }
+            .padding()
+            Button("Disable Blocking") {
+                store.shield.applications = nil
+                store.shield.applicationCategories = ShieldSettings.ActivityCategoryPolicy<Application>.none
+                print("Blocking disabled")
+            }
+
         }
         .navigationBarBackButtonHidden(true)
      
@@ -73,6 +81,7 @@ struct OnboardingView2: View {
             print("Failed to encode and save appsBlockedSelection.")
         }
     }
+
 
     func printStoredAppsBlockedJSON() {
         let sharedDefaults = UserDefaults(suiteName: "group.com.arjun.nuvian") // Use shared defaults if App Groups are enabled

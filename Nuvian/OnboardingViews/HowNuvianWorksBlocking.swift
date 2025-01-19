@@ -25,7 +25,7 @@ struct HowNuvianWorksBlocking: View {
                         .padding(.top)
                         .padding()
                     
-                    Text("Nuvian blocks distracting apps on sleep schedules you set.You are free unblock these apps after a short delay but that's where the next core feature of Nuvian comes in...")
+                    Text("Nuvian blocks distracting apps on sleep schedules you set. You are free to unblock these apps after a short delay but that's where the next core feature of Nuvian comes in...")
                         .foregroundStyle(.white)
                         .padding()
                         .font(.title3)
@@ -43,6 +43,7 @@ struct HowNuvianWorksBlocking: View {
                 
             }
         }
+        .navigationBarBackButtonHidden(true)
     }
 }
 

@@ -50,6 +50,7 @@ struct HowNuvianWorksRanking: View {
                 
             }
         }
+        .navigationBarBackButtonHidden(true)
     }
 }
 

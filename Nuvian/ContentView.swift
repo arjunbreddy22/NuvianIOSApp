@@ -22,10 +22,7 @@ struct ContentView: View {
                 OnboardingView()
             }
             
-            Button("Disable Blocking") {
-                store.shield.applications = nil
-                print("Blocking disabled")
-            }
+ 
         }
     }
 }

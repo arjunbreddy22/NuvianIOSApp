@@ -24,7 +24,7 @@ struct WhyNuvianView: View {
                     Text("Whether you want to use Nuvian to boost your productivity, build better habits, or improve your daily routine, we’re here to help you stay on track and achieve your goals:")
                         .foregroundStyle(.white)
                         .font(.title2)
-                        .fontWeight(.bold)
+                        .fontWeight(.semibold)
                         .multilineTextAlignment(.center)
                         .padding()
                     
@@ -71,6 +71,7 @@ struct WhyNuvianView: View {
                 }
             }
         }
+        .navigationBarBackButtonHidden(true)
         
     }
     private func requestAuth() async {

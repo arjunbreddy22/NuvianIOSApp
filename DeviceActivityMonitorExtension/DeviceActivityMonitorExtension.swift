@@ -18,9 +18,18 @@ class DeviceActivityMonitorExtension: DeviceActivityMonitor {
         // Handle the start of the interval.
         
         print("got into interval did start")
-        let applications = AppsBlockedModel.shared.appsBlocked
+        let model = AppsBlockedModel.shared
+        let applications = model.appsBlocked
+      
         print("applicaitons, ", applications)
+       
         store.shield.applications = applications.applicationTokens.isEmpty ? nil : applications.applicationTokens
+        store.shield.applicationCategories = applications.categoryTokens.isEmpty
+            ? ShieldSettings.ActivityCategoryPolicy<Application>.none
+            : ShieldSettings.ActivityCategoryPolicy<Application>.specific(applications.categoryTokens)
+
+
+        
         print("blocked lol")
         
     }
@@ -31,6 +40,7 @@ class DeviceActivityMonitorExtension: DeviceActivityMonitor {
         // Handle the end of the interval.
         
         store.shield.applications = nil
+        store.shield.applicationCategories = ShieldSettings.ActivityCategoryPolicy<Application>.none
     }
     
     override func eventDidReachThreshold(_ event: DeviceActivityEvent.Name, activity: DeviceActivityName) {
