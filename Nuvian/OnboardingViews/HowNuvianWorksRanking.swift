@@ -45,7 +45,7 @@ struct HowNuvianWorksRanking: View {
                     
                 }
                 .navigationDestination(isPresented: $isPressed) {
-                    OnboardingView2()
+                    PickAppsToBlock()
                 }
                 
             }
@@ -56,4 +56,5 @@ struct HowNuvianWorksRanking: View {
 
 #Preview {
     HowNuvianWorksRanking()
+        .environmentObject(Streak())
 }

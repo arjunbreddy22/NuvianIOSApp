@@ -40,7 +40,7 @@ struct OnboardingView2: View {
            
             
             Button("Set Up Device Activity") {
-                // Define the schedule
+                // Define the schedule, two ints
                 let schedule = DeviceActivitySchedule(
                     intervalStart: DateComponents(hour: 0, minute: 0),
                     intervalEnd: DateComponents(hour: 23, minute: 59),
