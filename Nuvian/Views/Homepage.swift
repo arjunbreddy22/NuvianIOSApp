@@ -31,6 +31,7 @@ struct Homepage: View {
                         .foregroundStyle(.white)
                     Button("Increment Streak") {
                         streak.streakCount += 1
+                        print("streak.streakCount, ", streak.streakCount)
                     }
                     .foregroundStyle(Color(red: 0/255, green:255/255, blue: 255/255))
                 }
