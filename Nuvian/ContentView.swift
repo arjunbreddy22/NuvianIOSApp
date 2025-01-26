@@ -11,9 +11,11 @@ struct ContentView: View {
     @AppStorage("hasSeenOnboarding") private var hasSeenOnboarding: Bool = false
     
     let store = ManagedSettingsStore()
+    /*
     init() {
         hasSeenOnboarding = false
     }
+     */
     var body: some View {
         VStack {
             if hasSeenOnboarding {

@@ -14,9 +14,11 @@ struct OnboardingView: View {
     @State private var isAuthorized: Bool = false
     @State private var isPressed: Bool = false
     // remove this init later, it makes it so hasSeenOnboarding resets whenever I come back here
+    /*
     init() {
         hasSeenOnboarding = false
     }
+     */
     var body: some View {
         NavigationStack {
             ZStack {
