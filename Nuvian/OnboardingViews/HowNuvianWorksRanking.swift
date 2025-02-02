@@ -57,4 +57,5 @@ struct HowNuvianWorksRanking: View {
 #Preview {
     HowNuvianWorksRanking()
         .environmentObject(Streak())
+        .environmentObject(Ranking())
 }

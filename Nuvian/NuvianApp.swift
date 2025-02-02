@@ -10,6 +10,7 @@ import ManagedSettings
 @main
 struct NuvianApp: App {
     @StateObject private var streak = Streak()
+    @StateObject private var ranking = Ranking()
     @StateObject var store = ManagedSettingsStore()
    
     var body: some Scene {
@@ -17,6 +18,7 @@ struct NuvianApp: App {
             ContentView()
                 .environmentObject(streak)
                 .environmentObject(store)
+                .environmentObject(ranking)
                 
         }
     }

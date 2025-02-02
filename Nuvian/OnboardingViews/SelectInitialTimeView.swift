@@ -113,4 +113,5 @@ struct SelectInitialTimeView: View {
 #Preview {
     SelectInitialTimeView()
         .environmentObject(Streak())
+        .environmentObject(Ranking())
 }

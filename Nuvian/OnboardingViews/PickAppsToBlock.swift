@@ -185,4 +185,5 @@ struct PickAppsToBlock: View {
 #Preview {
     PickAppsToBlock()
         .environmentObject(Streak())
+        .environmentObject(Ranking())
 }

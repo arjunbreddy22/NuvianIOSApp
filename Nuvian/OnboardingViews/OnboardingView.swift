@@ -74,5 +74,6 @@ struct OnboardingView: View {
 #Preview {
     OnboardingView()
         .environmentObject(Streak())
+        .environmentObject(Ranking())
         
 }

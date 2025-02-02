@@ -88,4 +88,5 @@ struct WhyNuvianView: View {
 #Preview {
     WhyNuvianView()
         .environmentObject(Streak())
+        .environmentObject(Ranking())
 }

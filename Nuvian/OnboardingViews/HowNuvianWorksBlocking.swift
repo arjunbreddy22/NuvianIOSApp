@@ -50,4 +50,5 @@ struct HowNuvianWorksBlocking: View {
 #Preview {
     HowNuvianWorksBlocking()
         .environmentObject(Streak())
+        .environmentObject(Ranking())
 }
