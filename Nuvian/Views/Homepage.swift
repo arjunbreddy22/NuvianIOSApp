@@ -9,9 +9,11 @@ import SwiftUI
 import ManagedSettings
 
 struct Homepage: View {
-    @EnvironmentObject var streak: Streak
+    //@EnvironmentObject var streak: Streak
     @EnvironmentObject var ranking: Ranking
     @State private var testIsPressed: Bool = false
+    @AppStorage("streakCount", store: UserDefaults(suiteName: "group.com.arjun.nuvian")) var streakCount: Int = 0
+    @AppStorage("unblockedButtonClicked", store: UserDefaults(suiteName: "group.com.arjun.nuvian")) var unblockedButtonClicked: Bool = false;
     let store = ManagedSettingsStore()
     var body: some View {
         NavigationStack {
@@ -67,11 +69,11 @@ struct Homepage: View {
                             Text("Current Streak:")
                                 .foregroundStyle(.white)
                             Spacer()
-                            Text("\(streak.streakCount) days")
+                            Text("\(streakCount) days")
                                 .foregroundStyle(.white)
                             Button("Increment Streak") {
-                                streak.streakCount += 1
-                                print("streak.streakCount, ", streak.streakCount)
+                                streakCount += 1
+                                print("streak.streakCount, ", streakCount)
                             }
                             .foregroundStyle(Color(red: 0/255, green:255/255, blue: 255/255))
                         }
@@ -90,15 +92,31 @@ struct Homepage: View {
                         Button(action: {
                             store.shield.applications = nil
                             store.shield.applicationCategories = ShieldSettings.ActivityCategoryPolicy<Application>.none
-                            if ranking.rankingNumber - 3 < 0 {
-                                ranking.rankingNumber = 0
-                                print("ranking.rankingNumber, ", ranking.rankingNumber)
-                                testIsPressed = true
-                            } else {
-                                ranking.rankingNumber -= 3
-                                print("ranking.rankingNumber, ", ranking.rankingNumber)
-                                testIsPressed = true
+                            if !unblockedButtonClicked {
+                                if ranking.rankingNumber - 3 < 0 {
+                                    ranking.rankingNumber = 0
+                                    print("ranking.rankingNumber, ", ranking.rankingNumber)
+                                    testIsPressed = true
+                                } else {
+                                    ranking.rankingNumber -= 3
+                                    print("ranking.rankingNumber, ", ranking.rankingNumber)
+                                    testIsPressed = true
+                                }
+                                unblockedButtonClicked = true
                             }
+                            
+                            streakCount = 0
+                            /*
+                            let appGroupID = "group.com.arjun.nuvian"
+                            if let userDefaults = UserDefaults(suiteName: appGroupID) {
+                                userDefaults.set(streakCount, forKey: "streakCount")
+                            }
+                            
+                            if let userDefaults = UserDefaults(suiteName: appGroupID) {
+                                print("streak count in userdefaults, \(userDefaults.integer(forKey: "streakCount"))")
+                            }
+                             */
+                        
                                     
                         }) {
                             ZStack {

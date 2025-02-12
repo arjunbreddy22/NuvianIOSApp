@@ -42,7 +42,7 @@ struct HowNuvianWorksRanking: View {
                     .foregroundStyle(Color.mint)
                     .font(.title3)
                     Spacer()
-                    
+            
                 }
                 .navigationDestination(isPresented: $isPressed) {
                     PickAppsToBlock()

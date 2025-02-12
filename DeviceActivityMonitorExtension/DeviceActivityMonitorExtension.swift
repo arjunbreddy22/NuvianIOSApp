@@ -27,6 +27,11 @@ class DeviceActivityMonitorExtension: DeviceActivityMonitor {
         store.shield.applicationCategories = applications.categoryTokens.isEmpty
             ? ShieldSettings.ActivityCategoryPolicy<Application>.none
             : ShieldSettings.ActivityCategoryPolicy<Application>.specific(applications.categoryTokens)
+        
+        let appGroupId = "group.com.arjun.nuvian"
+        if let userDefaults = UserDefaults(suiteName: appGroupId) {
+            userDefaults.set(false, forKey: "unblockedButtonClicked")
+        }
 
 
         
@@ -41,6 +46,15 @@ class DeviceActivityMonitorExtension: DeviceActivityMonitor {
         
         store.shield.applications = nil
         store.shield.applicationCategories = ShieldSettings.ActivityCategoryPolicy<Application>.none
+        //try incrementing streak:
+        let appGroupID = "group.com.arjun.nuvian"
+        if let userDefaults = UserDefaults(suiteName: appGroupID) {
+            let currentStreak = userDefaults.integer(forKey: "streakCount")
+            let newStreak = currentStreak + 1
+            userDefaults.set(newStreak, forKey: "streakCount")
+            print("Incremented streakCount to \(newStreak)")
+        }
+        print("interval ended")
     }
     
     override func eventDidReachThreshold(_ event: DeviceActivityEvent.Name, activity: DeviceActivityName) {

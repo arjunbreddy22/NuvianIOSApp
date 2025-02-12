@@ -69,6 +69,7 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Models/AppsBlockedModel.swift,
+				Models/StreakCount.swift,
 			);
 			target = E7DB305C2D38D9AE00AA330C /* DeviceActivityMonitorExtension */;
 		};
