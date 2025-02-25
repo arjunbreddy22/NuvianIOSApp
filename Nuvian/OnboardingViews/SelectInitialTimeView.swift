@@ -9,6 +9,7 @@ import SwiftUI
 import DeviceActivity
 extension DeviceActivityName {
     static let sleep = Self("sleep")
+    static let breakTime = Self("breakTime")
 }
 
 struct SelectInitialTimeView: View {
