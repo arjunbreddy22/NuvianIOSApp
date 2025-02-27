@@ -98,41 +98,115 @@ struct Homepage: View {
                         }
                         
                         Text("\(eloCount) elo")
+                        VStack {
+                            HStack {
+                                Text("Current Streak:")
+                                    .foregroundStyle(.white)
+                                    .font(.headline)
+                                    .fontWeight(.bold)
+                                Spacer()
+                                Text("\(streakCount) days")
+                                    .foregroundStyle(.white)
+                                    .font(.headline)
+                            }
+                            
+                            HStack {
+                                Text("Sleep Time:")
+                                    .foregroundStyle(.white)
+                                    .font(.headline)
+                                    .fontWeight(.bold)
+                                Spacer()
+                                Text("\(streakCount) days")
+                                    .foregroundStyle(.white)
+                                    .font(.headline)
+                            }
+                            Divider()
+                                .background(.white)
+                            VStack {
+                                Text("Want to change your sleep time?")
+                                    .font(.headline)
+                                    .foregroundColor(.white)
+                                Button("Click here") {
+                                    
+                                }
+                            }
+                            Divider()
+                                .background(.white)
+                            VStack {
+                                if sleepTimeRunning {
+                                    Text("Sleep Mode Active")
+                                        .font(.headline)
+                                        .foregroundColor(.white)
+                                    Text("All distracting apps are blocked during your designated sleep time. Enjoy a peaceful, distraction-free rest!")
+                                        .font(.subheadline)
+                                        .foregroundColor(.white)
+                                        .multilineTextAlignment(.center)
+                                        .lineLimit(nil)
+                                        .fixedSize(horizontal: false, vertical: true)
+                                        .padding(.horizontal)
+                                } else {
+                                    Text("Sleep Mode Not Active")
+                                        .font(.headline)
+                                        .foregroundColor(.white)
+                                    Text("All distracting apps are currently available. They will be blocked during your designated sleep time.")
+                                        .font(.subheadline)
+                                        .foregroundColor(.white)
+                                        .multilineTextAlignment(.center)
+                                        .lineLimit(nil)
+                                        .fixedSize(horizontal: false, vertical: true)
+                                        .padding(.horizontal)
+                                }
+                            }
+                                        
+                            Divider()
+                                .background(Color.white)
+                                        
+                            // Quote of the Day
+                            VStack {
+                                Text("Quote of the Day")
+                                    .font(.headline)
+                                    .foregroundColor(.white)
+                                Text("\"Sleep is the best meditation.\" - Dalai Lama")
+                                    .font(.body)
+                                    .foregroundColor(.white)
+                                    .multilineTextAlignment(.center)
+                                    .padding(.horizontal)
+                            }
+                            
+                            Divider()
+                                .background(.white)
+                            
+                            
+                            
+                        }
+                        .padding()
+                      
                         Spacer()
+                        VStack {
+                            Spacer()
+                            Button(action: {
+                                // Instead of immediately unblocking, show the option dialog.
+                                //turn sleep time running var in userdefaults to false
+                                showUnblockOptions = true
+                            }) {
+                                ZStack {
+                                    Color.red
+                                        .cornerRadius(30)
+                                    Text("Unblock")
+                                        .foregroundStyle(.white)
+                                        .fontWeight(.bold)
+                                        .font(.title2)
+                                }
+                            }
+                            .frame(width: geometry.size.width * 0.90,
+                                   height: geometry.size.height * 0.10)
+                            .padding()
+                        }
+                        .padding(.top, geometry.size.height * 0.02)
                     }
                     .foregroundStyle(.white)
                     
-                    VStack {
-                        HStack {
-                            Text("Current Streak:")
-                                .foregroundStyle(.white)
-                            Spacer()
-                            Text("\(streakCount) days")
-                                .foregroundStyle(.white)
-                        }
-                    }
-                    .padding()
-                    
-                    VStack {
-                        Spacer()
-                        Button(action: {
-                            // Instead of immediately unblocking, show the option dialog.
-                            //turn sleep time running var in userdefaults to false
-                            showUnblockOptions = true
-                        }) {
-                            ZStack {
-                                Color.red
-                                    .cornerRadius(30)
-                                Text("Unblock")
-                                    .foregroundStyle(.white)
-                                    .fontWeight(.bold)
-                                    .font(.title2)
-                            }
-                        }
-                        .frame(width: geometry.size.width * 0.90,
-                               height: geometry.size.height * 0.10)
-                        .padding()
-                    }
+            
                 }
             }
         }
