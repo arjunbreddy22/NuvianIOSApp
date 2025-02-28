@@ -14,7 +14,10 @@ struct Homepage: View {
     @AppStorage("eloCount", store:UserDefaults(suiteName: "group.com.arjun.nuvian")) var eloCount: Int = 0;
     @AppStorage("streakCount", store: UserDefaults(suiteName: "group.com.arjun.nuvian")) var streakCount: Int = 0
     @AppStorage("unblockedButtonClicked", store: UserDefaults(suiteName: "group.com.arjun.nuvian")) var unblockedButtonClicked: Bool = false
-    @AppStorage("sleepTimeRunning") var sleepTimeRunning: Bool = false // set false because this only gives it a val if it dont already have one (which it will from deviceActivityMonitorExtension)
+    @AppStorage("sleepTimeRunning", store: UserDefaults(suiteName: "group.com.arjun.nuvian")) var sleepTimeRunning: Bool = false
+    @AppStorage("sleepTimeString") private var sleepTimeString: String = ""
+    @AppStorage("wakeUpTimeString") private var wakeUpTimeString: String = ""
+    
     let store = ManagedSettingsStore()
     let appGroupID = "group.com.arjun.nuvian"
     
@@ -29,159 +32,162 @@ struct Homepage: View {
                 ZStack {
                     Color(red: 10/255, green: 25/255, blue: 85/255)
                         .ignoresSafeArea()
-                    
-                    VStack {
-                        Text("Nuvian")
-                            .font(.title)
-                            .foregroundColor(.white)
-                            .padding(.leading, -190)
-                            .padding(.top, 14)
-                        Spacer()
-                    }
-                    
-                    VStack {
-                        // ... your existing ranking/medal view logic ...
-                        if eloCount >= 0 && eloCount <= 5 {
-                            Bronze(w: geometry.size.width * 0.6,
-                                   h: geometry.size.width * 0.6,
-                                   textInput: "III",
-                                   textSize: geometry.size.width * 0.2)
-                                .padding(.top, geometry.size.height * 0.1)
-                        } else if eloCount >= 6 && eloCount <= 20 {
-                            Bronze(w: geometry.size.width * 0.6,
-                                   h: geometry.size.width * 0.6,
-                                   textInput: "II",
-                                   textSize: geometry.size.width * 0.2)
-                                .padding(.top, geometry.size.height * 0.1)
-                        } else if eloCount >= 21 && eloCount <= 110 {
-                            Bronze(w: geometry.size.width * 0.6,
-                                   h: geometry.size.width * 0.6,
-                                   textInput: "I",
-                                   textSize: geometry.size.width * 0.2)
-                                .padding(.top, geometry.size.height * 0.1)
-                        } else if eloCount >= 111 && eloCount <= 200 {
-                            Silver(w: geometry.size.width * 0.6,
-                                   h: geometry.size.width * 0.6,
-                                   textInput: "III",
-                                   textSize: geometry.size.width * 0.2)
-                                .padding(.top, geometry.size.height * 0.1)
-                        } else if eloCount >= 201 && eloCount <= 350 {
-                            Silver(w: geometry.size.width * 0.6,
-                                   h: geometry.size.width * 0.6,
-                                   textInput: "II",
-                                   textSize: geometry.size.width * 0.2)
-                                .padding(.top, geometry.size.height * 0.1)
-                        } else if eloCount >= 351 && eloCount <= 560 {
-                            Silver(w: geometry.size.width * 0.6,
-                                   h: geometry.size.width * 0.6,
-                                   textInput: "I",
-                                   textSize: geometry.size.width * 0.2)
-                                .padding(.top, geometry.size.height * 0.1)
-                        } else if eloCount >= 561 && eloCount <= 890 {
-                            Gold(w: geometry.size.width * 0.6,
-                                 h: geometry.size.width * 0.6,
-                                 textInput: "III",
-                                 textSize: geometry.size.width * 0.2)
-                                .padding(.top, geometry.size.height * 0.1)
-                        } else if eloCount >= 891 && eloCount <= 1250 {
-                            Gold(w: geometry.size.width * 0.6,
-                                 h: geometry.size.width * 0.6,
-                                 textInput: "II",
-                                 textSize: geometry.size.width * 0.2)
-                                .padding(.top, geometry.size.height * 0.1)
-                        } else if eloCount >= 1251 {
-                            Gold(w: geometry.size.width * 0.6,
-                                 h: geometry.size.width * 0.6,
-                                 textInput: "I",
-                                 textSize: geometry.size.width * 0.2)
-                                .padding(.top, geometry.size.height * 0.1)
-                        }
-                        
-                        Text("\(eloCount) elo")
+                    ScrollView {
                         VStack {
-                            HStack {
-                                Text("Current Streak:")
-                                    .foregroundStyle(.white)
-                                    .font(.headline)
-                                    .fontWeight(.bold)
-                                Spacer()
-                                Text("\(streakCount) days")
-                                    .foregroundStyle(.white)
-                                    .font(.headline)
-                            }
-                            
-                            HStack {
-                                Text("Sleep Time:")
-                                    .foregroundStyle(.white)
-                                    .font(.headline)
-                                    .fontWeight(.bold)
-                                Spacer()
-                                Text("\(streakCount) days")
-                                    .foregroundStyle(.white)
-                                    .font(.headline)
-                            }
-                            Divider()
-                                .background(.white)
-                            VStack {
-                                Text("Want to change your sleep time?")
-                                    .font(.headline)
-                                    .foregroundColor(.white)
-                                Button("Click here") {
-                                    
-                                }
-                            }
-                            Divider()
-                                .background(.white)
-                            VStack {
-                                if sleepTimeRunning {
-                                    Text("Sleep Mode Active")
-                                        .font(.headline)
-                                        .foregroundColor(.white)
-                                    Text("All distracting apps are blocked during your designated sleep time. Enjoy a peaceful, distraction-free rest!")
-                                        .font(.subheadline)
-                                        .foregroundColor(.white)
-                                        .multilineTextAlignment(.center)
-                                        .lineLimit(nil)
-                                        .fixedSize(horizontal: false, vertical: true)
-                                        .padding(.horizontal)
-                                } else {
-                                    Text("Sleep Mode Not Active")
-                                        .font(.headline)
-                                        .foregroundColor(.white)
-                                    Text("All distracting apps are currently available. They will be blocked during your designated sleep time.")
-                                        .font(.subheadline)
-                                        .foregroundColor(.white)
-                                        .multilineTextAlignment(.center)
-                                        .lineLimit(nil)
-                                        .fixedSize(horizontal: false, vertical: true)
-                                        .padding(.horizontal)
-                                }
-                            }
-                                        
-                            Divider()
-                                .background(Color.white)
-                                        
-                            // Quote of the Day
-                            VStack {
-                                Text("Quote of the Day")
-                                    .font(.headline)
-                                    .foregroundColor(.white)
-                                Text("\"Sleep is the best meditation.\" - Dalai Lama")
-                                    .font(.body)
-                                    .foregroundColor(.white)
-                                    .multilineTextAlignment(.center)
-                                    .padding(.horizontal)
-                            }
-                            
-                            Divider()
-                                .background(.white)
-                            
-                            
-                            
+                            Text("Nuvian")
+                                .font(.title)
+                                .foregroundColor(.white)
+                                .padding(.leading, -190)
+                                .padding(.top, 14)
                         }
-                        .padding()
-                      
-                        Spacer()
+                    
+                        VStack {
+                            // ... your existing ranking/medal view logic ...
+                            if eloCount >= 0 && eloCount <= 5 {
+                                Bronze(w: geometry.size.width * 0.6,
+                                       h: geometry.size.width * 0.6,
+                                       textInput: "III",
+                                       textSize: geometry.size.width * 0.2)
+                            } else if eloCount >= 6 && eloCount <= 20 {
+                                Bronze(w: geometry.size.width * 0.6,
+                                       h: geometry.size.width * 0.6,
+                                       textInput: "II",
+                                       textSize: geometry.size.width * 0.2)
+                            } else if eloCount >= 21 && eloCount <= 110 {
+                                Bronze(w: geometry.size.width * 0.6,
+                                       h: geometry.size.width * 0.6,
+                                       textInput: "I",
+                                       textSize: geometry.size.width * 0.2)
+                            } else if eloCount >= 111 && eloCount <= 200 {
+                                Silver(w: geometry.size.width * 0.6,
+                                       h: geometry.size.width * 0.6,
+                                       textInput: "III",
+                                       textSize: geometry.size.width * 0.2)
+                            } else if eloCount >= 201 && eloCount <= 350 {
+                                Silver(w: geometry.size.width * 0.6,
+                                       h: geometry.size.width * 0.6,
+                                       textInput: "II",
+                                       textSize: geometry.size.width * 0.2)
+                            } else if eloCount >= 351 && eloCount <= 560 {
+                                Silver(w: geometry.size.width * 0.6,
+                                       h: geometry.size.width * 0.6,
+                                       textInput: "I",
+                                       textSize: geometry.size.width * 0.2)
+                            } else if eloCount >= 561 && eloCount <= 890 {
+                                Gold(w: geometry.size.width * 0.6,
+                                     h: geometry.size.width * 0.6,
+                                     textInput: "III",
+                                     textSize: geometry.size.width * 0.2)
+                            } else if eloCount >= 891 && eloCount <= 1250 {
+                                Gold(w: geometry.size.width * 0.6,
+                                     h: geometry.size.width * 0.6,
+                                     textInput: "II",
+                                     textSize: geometry.size.width * 0.2)
+                            } else if eloCount >= 1251 {
+                                Gold(w: geometry.size.width * 0.6,
+                                     h: geometry.size.width * 0.6,
+                                     textInput: "I",
+                                     textSize: geometry.size.width * 0.2)
+                            }
+                            
+                            Text("\(eloCount) elo")
+                            VStack(spacing: 20) {
+                                // Current Streak & Sleep Time Card
+                                VStack(spacing: 16) {
+                                    HStack {
+                                        Text("Current Streak:")
+                                            .font(.headline)
+                                            .fontWeight(.bold)
+                                            .foregroundColor(.white)
+                                        Spacer()
+                                        Text("\(streakCount) days")
+                                            .font(.headline)
+                                            .foregroundColor(.white)
+                                    }
+                                    HStack {
+                                        Text("Sleep Schedule:")
+                                            .font(.headline)
+                                            .fontWeight(.bold)
+                                            .foregroundColor(.white)
+                                        Spacer()
+                                        Text(sleepTimeString + " - " + wakeUpTimeString)
+                                            .font(.headline)
+                                            .foregroundColor(.white)
+                                    }
+                                }
+                                .padding()
+                                .background(Color.black.opacity(0.3))
+                                .cornerRadius(12)
+                                
+                                // Sleep Time Change Card
+                                VStack(spacing: 12) {
+                                    HStack {
+                                        Text("Want to change your sleep schedule?")
+                                            .font(.headline)
+                                            .foregroundColor(.white)
+                                        Spacer()
+                                    }
+                                 
+                                    NavigationLink(destination: DatePickerSequenceView()) {
+                                        Text("Click here")
+                                            .font(.subheadline)
+                                            .fontWeight(.semibold)
+                                            .padding()
+                                            .frame(maxWidth: .infinity)
+                                            .background(Color.blue.opacity(0.7))
+                                            .foregroundColor(.white)
+                                            .cornerRadius(8)
+                                    }
+
+                                 
+                                       
+                                }
+                                .padding()
+                                .background(Color.black.opacity(0.3))
+                                .cornerRadius(12)
+                                
+                                // Sleep Mode Status Card
+                                VStack(spacing: 12) {
+                                    if sleepTimeRunning {
+                                        Text("Sleep Mode Active")
+                                            .font(.headline)
+                                            .foregroundColor(.white)
+                                        Text("All distracting apps are blocked during your designated sleep time. Enjoy a peaceful, distraction-free rest!")
+                                            .font(.subheadline)
+                                            .foregroundColor(.white)
+                                            .multilineTextAlignment(.center)
+                                    } else {
+                                        HStack {
+                                            Text("Sleep Mode Not Active")
+                                                .font(.headline)
+                                                .foregroundColor(.white)
+                                            Spacer()
+                                        }
+                                        HStack {
+                                            Text("All distracting apps are currently available. They will be blocked during your designated sleep time.")
+                                                .font(.subheadline)
+                                                .foregroundColor(.white)
+                                                .multilineTextAlignment(.center)
+                                            Spacer()
+                                        }
+                                    }
+                                }
+                                .padding()
+                                .background(Color.black.opacity(0.3))
+                                .cornerRadius(12)
+                                
+                                // Quote of the Day Card
+                                VStack {
+                                    QuotesCarouselView()
+                                }
+                                .padding()
+                                .background(Color.black.opacity(0.3))
+                                .cornerRadius(12)
+                            }
+                            .padding()
+
+                        }
+                       
                         VStack {
                             Spacer()
                             Button(action: {
@@ -190,7 +196,7 @@ struct Homepage: View {
                                 showUnblockOptions = true
                             }) {
                                 ZStack {
-                                    Color.red
+                                    Color(red: 108/255, green: 92/255, blue: 231/255)
                                         .cornerRadius(30)
                                     Text("Unblock")
                                         .foregroundStyle(.white)
@@ -220,7 +226,7 @@ struct Homepage: View {
                     
                     if let userDefaults = UserDefaults(suiteName: appGroupID) {
                         let currentRanking = userDefaults.integer(forKey: "eloCount")
-                        let newRanking = currentRanking + 3
+                        let newRanking = currentRanking - 3
                         if currentRanking - 3 < 0 {
                             userDefaults.set(0, forKey: "eloCount")
                         } else {
@@ -253,6 +259,9 @@ struct Homepage: View {
                 scheduleBreak(duration: duration)
             })
         }
+    }
+    private func scheduleNewSleepTime() {
+        
     }
     
     /// Schedules a break monitoring event.

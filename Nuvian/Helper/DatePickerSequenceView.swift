@@ -7,32 +7,30 @@
 
 import SwiftUI
 import DeviceActivity
-extension DeviceActivityName {
-    static let sleep = Self("sleep")
-    static let breakTime = Self("breakTime")
-}
 
-struct SelectInitialTimeView: View {
+
+struct DatePickerSequenceView: View {
     @State private var sleepTime: Date = Date()
     @State private var wakeUpTime: Date = Date()
     @State private var confirmedSelection: Bool = false
     @State private var isPressed: Bool = false
     @AppStorage("sleepTimeString") private var sleepTimeString: String = ""
     @AppStorage("wakeUpTimeString") private var wakeUpTimeString: String = ""
-    @AppStorage("hasSeenOnboarding") private var hasSeenOnboarding: Bool = false
+    @Environment(\.dismiss) var dismiss
     /*
     init() {
         hasSeenOnboarding = false
     }
      */
     var body: some View {
+        
         NavigationStack {
             GeometryReader { geometry in
                 ZStack {
                     Color(red: 10/255, green: 25/255, blue: 85/255)
                         .ignoresSafeArea()
                     VStack {
-                        Text("Now, pick sleep and wake times")
+                        Text("Pick sleep and wake times")
                             .padding(.top, 10)
                             .padding()
                             .font(.title2)
@@ -101,9 +99,10 @@ struct SelectInitialTimeView: View {
                             // Start monitoring the schedule
                             let center = DeviceActivityCenter()
                             do {
+                                center.stopMonitoring([.sleep])
                                 try center.startMonitoring(.sleep, during: schedule)
                                 print("Started monitoring daily schedule!")
-                                hasSeenOnboarding = true
+                                dismiss()
                             } catch {
                                 print("Failed to start monitoring: \(error.localizedDescription)")
                             }
@@ -120,7 +119,7 @@ struct SelectInitialTimeView: View {
                         .scaleEffect(isPressed ? 0.95 : 1.0)
                         .animation(.spring(response: 0.3, dampingFraction: 0.6), value: isPressed)
                     }
-                    
+                
                 }
             }
         }
