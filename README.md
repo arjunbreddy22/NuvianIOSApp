@@ -53,4 +53,4 @@ This project is licensed under the MIT License.
 
 **Arjun Reddy**  
 iOS Developer • Creator of Nuvian  
-[LinkedIn](https://linkedin.com/in/yourprofile) • [Website](https://yourportfolio.com)
+
